@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DON-AID - Community Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <span class="logo-letter">D</span>
+                Community Aid
+            </div>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search Something Here...">
+            </div>
+        </div>
+        <div class="nav-links">
+            <div class="dropdown">
+                <button class="nav-link">Volunteer</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showDisasterResponse()">Disaster Response</a>
+                    <a href="#" onclick="showEmergencyAid()">Emergency Aid</a>
+                    <a href="#" onclick="showFoodDistribution()">Food Distribution</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="nav-link">Request Help</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showRequestSupport()">Request Support</a>
+                    <a href="#" onclick="showVolunteerNeeded()">Volunteer Needed</a>
+                    <a href="#" onclick="showFundraiserRequest()">Start Fundraiser</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="nav-link">Donate</button>
+                <div class="dropdown-content solid-menu">
+                    <a href="#" onclick="handleDonation('financial')">Financial Aid</a>
+                    <a href="#" onclick="handleDonation('food')">Food Aid</a>
+                    <a href="#" onclick="handleDonation('healthcare')">Healthcare Aid</a>
+                </div>
+            </div>
+            <a href="#" onclick="showFundraisers()" class="nav-link">Fundraiser</a>
+        </div>
+        <div class="user-profile" onclick="showUserProfile()">
+            <img src="profile-placeholder.jpg" alt="User" class="profile-img">
+            <span id="userName">Loading...</span>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>🏦DON-AID🏦</h1>
+                <div class="rating">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span></span>
+                </div>
+                <p class="description">
+                    Connecting those in need directly with people who want to help. No barriers, just compassion in action.
+                </p>
+                <div class="volunteers-info">
+                    <div class="volunteer-avatars">
+                        
+                    </div>
+                    <p>3 people have joined<br>this initiative</p>
+                </div>
+                <button class="join-button" onclick="joinInitiative()">Join this cause</button>
+            </div>
+            <div class="hero-number">
+                <span>03</span>
+                <h2>Community<br>Program</h2>
+                <p class="program-type">Food Distribution</p>
+            </div>
+        </div>
+
+        <div class="requests-section">
+            <h2>Requests Submitted</h2>
+            <div id="requestsList" class="requests-grid">
+                <!-- Requests will be dynamically added here -->
+            </div>
+        </div>
+    </main>
+    <!-- ... existing nav and hero section ... -->
+
+<main>
+    <div class="dashboard-grid">
+        <!-- Support Requests Container -->
+        <div class="dashboard-container">
+            <h2>Support Requests</h2>
+            <div id="supportRequestsList" class="requests-list">
+                <!-- Support requests will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- Volunteer Requests Container -->
+        <div class="dashboard-container">
+            <h2>Volunteer Needed</h2>
+            <div id="volunteerRequestsList" class="requests-list">
+                <!-- Volunteer requests will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- Fundraiser Requests Container -->
+        <div class="dashboard-container">
+            <h2>Fundraiser Requests</h2>
+            <div id="fundraiserRequestsList" class="requests-list">
+                <!-- Fundraiser requests will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Request Modal -->
+    <div id="volunteerNeededModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('volunteerNeededModal')">&times;</span>
+            <h2>Volunteer Needed</h2>
+            <form id="volunteerRequestForm" onsubmit="handleVolunteerRequest(event)">
+                <div class="form-group">
+                    <label for="place">Location</label>
+                    <input type="text" id="place" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Preferred Gender</label>
+                    <select id="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="any">Any</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age Range</label>
+                    <select id="age" required>
+                        <option value="">Select Age Range</option>
+                        <option value="18-25">18-25</option>
+                        <option value="26-35">26-35</option>
+                        <option value="36-50">36-50</option>
+                        <option value="50+">50+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="volunteerReason">Reason</label>
+                    <textarea id="volunteerReason" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Request →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Fundraiser Request Modal -->
+    <div id="fundraiserModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('fundraiserModal')">&times;</span>
+            <h2>Start Fundraiser</h2>
+            <form id="fundraiserForm" onsubmit="handleFundraiserRequest(event)">
+                <div class="form-group">
+                    <label for="amount">Target Amount</label>
+                    <input type="number" id="amount" required min="1">
+                </div>
+                <div class="form-group">
+                    <label for="fundraiserReason">Reason for Fundraising</label>
+                    <textarea id="fundraiserReason" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Request →</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+    <!-- Request Support Modal -->
+    <div id="requestSupportModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('requestSupportModal')">&times;</span>
+            <h2>Request Support</h2>
+            <form id="supportRequestForm" onsubmit="handleSupportRequest(event)">
+                <div class="help-type-container">
+                    <h3>What kind of help do you need?</h3>
+                    <select id="helpType" required>
+                        <option value="">Select type of help...</option>
+                        <option value="financial">Financial Support</option>
+                        <option value="food">Food Support</option>
+                        <option value="medical">Medical Support</option>
+                        <option value="volunteer">Volunteer Support</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="story-container">
+                    <h3>Tell your story</h3>
+                    <textarea id="userStory" placeholder="This helps donors understand how they can best help you..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Request →</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="home.js"></script>
+</body>
+</html>
